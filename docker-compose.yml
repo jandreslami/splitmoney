@@ -1,13 +1,13 @@
-version : '3.8'
 services: 
   dev-db:
     image: postgres:16
     ports:
-      - '3000:3002'
+      - 5434:5432
     environment:
-      POSTGRES_PASSWORD : '1234'
-      POSTGRES_USER : 'nest'
-#     networks:
-#       - test
-# networks:
-#   test:
+      POSTGRES_PASSWORD : 1234
+      POSTGRES_USER : user
+      POSTGRES_DB : nest
+    networks:
+      - test
+networks:
+  test:
