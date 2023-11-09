@@ -11,37 +11,54 @@ datasource db {
 }
 
 model User {
-  id                Int       @id @default(autoincrement())
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
-  fullName          String
-  email             String    @unique
-  paymentsMade      Payment[] @relation("userOwner")
-  paymentsReceived  Payment[] @relation(name: "userReceiver")
-  transactionsOwned Json
+  id               Int            @id @default(autoincrement())
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  fullName         String
+  email            String         @unique
+  paymentsMade     Payment[]      @relation("userOwner")
+  paymentsReceived Payment[]      @relation("userReceiver")
+  contributions    Contribution[]
 }
 
 model Transaction {
-  id                Int      @id @default(autoincrement())
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  type              String[] @default(["expense", "income"])
-  name              String?
-  category          String?
-  amount            Int
-  date              DateTime
-  currency          String?
-  userContributions Json
+  id            Int            @id @default(autoincrement())
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  type          String[]       @default(["expense", "income"])
+  name          String?
+  category      String?
+  amount        Decimal
+  date          DateTime
+  currency      String?
+  contributions Contribution[]
 }
 
 model Payment {
-  id           Int      @id @default(autoincrement())
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  name         String?
-  date         DateTime
-  userOwner    User[]   @relation(name: "userOwner")
-  userReceiver User[]   @relation(name: "userReceiver")
-  amount       Int
-  currency     String?
+  id             Int      @id @default(autoincrement())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  name           String?
+  date           DateTime
+  userOwner      User[]   @relation("userOwner")
+  userOwnerId    Int
+  userReceiver   User[]   @relation("userReceiver")
+  userReceiverId Int
+  amount         Decimal
+  currency       String?
+}
+
+model Contribution {
+  id            Int         @id @default(autoincrement())
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  
+  transaction   Transaction @relation(fields: [transactionId], references: [id])
+  transactionId Int
+  user          User        @relation(fields: [userId], references: [id])
+  userId        Int
+  percentage    Float
 }
