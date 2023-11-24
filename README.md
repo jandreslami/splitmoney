@@ -1,15 +1,10 @@
-Go to specsAndEntities.drawio to find roughly what the project is about
+Go to specsAndEntities.drawio to find the entities model and understand what the repo is about
 
-## Support
+![img](public/img/entities.png)
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+Tech stack:
+- Nest.js
+- Prisma ORM
+- PostgreSQL
+- JWT/ passport.js / argon2
+- Jest (testing still todo)
