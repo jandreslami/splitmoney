@@ -35,30 +35,21 @@ export class AuthService {
   }
 
   async logIn(dto: AuthDto) {
-    //  retrieve user by email
     const user = await this.prisma.user.findUnique({
       where: {
         email: dto.email,
       },
     });
 
-    console.log('user:', user);
-
-    // if user not exists throw exception
-
     if (!user) {
       throw new ForbiddenException('Credentials invalid');
     }
 
-    // compare hashes
-
     const passwordMatches = await argon2.verify(user.hash, dto.password);
 
-    // if hashes not match throw exception
     if (!passwordMatches) {
       throw new ForbiddenException('Credentials invalid');
     }
-    //send back jwt
 
     const payload = {
       sub: user.id,
